@@ -75,6 +75,16 @@ public class TicketPriceRoutesTest {
 		assertEquals(fss.getFlightResult(),expectedResult);
 	}
 
+	@Test
+	public void setRoutesAmsToFraFromMadToBcn() throws LastMinuteException
+	{
+		Route route = new Route("MAD", "BCN");
+		route.setOrigin("AMS");
+		route.setDestination("FRA");
+
+        assertEquals(route,new Route("AMS","FRA"));
+	}
+
 	@Rule
     public ExpectedException expectedEx3 = ExpectedException.none();
 

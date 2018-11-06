@@ -35,7 +35,7 @@ public class FlightSearchingSystem {
 	 */
 	public void searchFlights(int passengerNumber, Date departureDate) throws LastMinuteException
 	{
-		long daysPriorDeparture = this.getDaysPriorDeparture(departureDate);
+		long daysPriorDeparture = PriceCalculator.getDaysPriorDeparture(departureDate);
 		BigDecimal discountedPrice;
 
 		if(passengerNumber <= 0){
@@ -51,19 +51,6 @@ public class FlightSearchingSystem {
 			discountedPrice = PriceCalculator.getDiscountedPrice(passengerNumber, daysPriorDeparture, flight.getPrice());
 			this.ticketPriceFlights.put(flight.getFlightCode(), discountedPrice);
 		}
-	}
-
-	/**
-	 * Get the number of days prior to the departure of the flight
-	 * @param departureDate
-	 * @return
-	 */
-	public long getDaysPriorDeparture (Date departureDate)
-	{
-		Date currentDate = new Date();
-		long diffInMillies = departureDate.getTime() - currentDate.getTime();
-	    long daysPriorDeparture = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-	    return daysPriorDeparture;
 	}
 
 	/**
