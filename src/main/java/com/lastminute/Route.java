@@ -17,7 +17,10 @@ public class Route {
 		this.destination = destination;
 	}
 
-
+	/**
+	 * Set all the flights for the specified route
+	 * @param flights
+	 */
 	public void setFlights(List<Flight> flights) {
 		this.flights = flights;
 	}
@@ -114,6 +117,4 @@ public class Route {
 			return false;
 		return true;
 	}
-
-
 }

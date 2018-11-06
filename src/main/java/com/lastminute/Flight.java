@@ -95,6 +95,7 @@ public class Flight {
 	/**
 	 * Print the flight's information
 	 */
+	@Override
 	public String toString() {
 		return flightCode + "," + price.setScale(2, BigDecimal.ROUND_HALF_UP);
 	}

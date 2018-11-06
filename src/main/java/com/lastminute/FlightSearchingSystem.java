@@ -104,6 +104,7 @@ public class FlightSearchingSystem {
 	/**
 	 * Get all the information about the research of flights
 	 */
+	@Override
 	public String toString() {
 		String output = "";
 		for (String key : ticketPriceFlights.keySet()) {
