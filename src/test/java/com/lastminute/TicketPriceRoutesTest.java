@@ -11,11 +11,14 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
-import com.lastminute.LastMinuteException;
-import com.lastminute.NotFoundException;
-import com.lastminute.Route;
+import com.lastminute.exception.LastMinuteException;
+import com.lastminute.exception.NotFoundException;
+import com.lastminute.model.Flight;
+import com.lastminute.model.Route;
 import com.lastminute.FlightSearchingSystem;
 
 /**
@@ -72,9 +75,15 @@ public class TicketPriceRoutesTest {
 		assertEquals(fss.getFlightResult(),expectedResult);
 	}
 
-	@Test(expected = NotFoundException.class)
+	@Rule
+    public ExpectedException expectedEx3 = ExpectedException.none();
+
+	@Test
 	public void getRoutesCdgToFra() throws NotFoundException, LastMinuteException
 	{
+		expectedEx3.expect(NotFoundException.class);
+        expectedEx3.expectMessage("No flights available for the defined route");
+
 		Route route = new Route("CDG", "FRA");
 		route.setFlights(loadFlights("CDG", "FRA"));
 		FlightSearchingSystem fss = new FlightSearchingSystem(route);
@@ -82,16 +91,7 @@ public class TicketPriceRoutesTest {
 	}
 
 	@Test(expected = LastMinuteException.class)
-	public void getRouteWithNegativePassengers() throws LastMinuteException
-	{
-		Route route = new Route("BCN", "MAD");
-		route.setFlights(loadFlights("BCN", "MAD"));
-		FlightSearchingSystem fss = new FlightSearchingSystem(route);
-		fss.searchFlights(-2, getDepartureDate(1));
-	}
-
-	@Test(expected = LastMinuteException.class)
-	public void getRouteWithEmptyOrigin() throws LastMinuteException
+	public void shouldThrowLastMinuteExceptionWhenOriginIsNotDefined() throws LastMinuteException
 	{
 		Route route = new Route("","MAD");
 		route.setFlights(loadFlights("", "MAD"));
@@ -100,7 +100,7 @@ public class TicketPriceRoutesTest {
 	}
 
 	@Test(expected = LastMinuteException.class)
-	public void getRouteWithEmptyDestination() throws LastMinuteException
+	public void shouldThrowLastMinuteExceptionWhenDestinationIsNotDefined() throws LastMinuteException
 	{
 		Route route = new Route("BCN","");
 		route.setFlights(loadFlights("BCN", ""));
@@ -108,13 +108,34 @@ public class TicketPriceRoutesTest {
 		fss.searchFlights(2, getDepartureDate(1));
 	}
 
-	@Test(expected = LastMinuteException.class)
-	public void getRoutesWithFlightAheadTheCurrentDate() throws LastMinuteException
+	@Rule
+    public ExpectedException expectedEx1 = ExpectedException.none();
+
+	@Test
+	public void shouldThrowLastMinuteExceptionWhenDateIsAheadTheCurrentDate() throws LastMinuteException
 	{
+		expectedEx1.expect(LastMinuteException.class);
+        expectedEx1.expectMessage("The departure date is mandatory and it should be ahead the current date");
+
 		Route route = new Route("BCN", "MAD");
 		route.setFlights(loadFlights("BCN", "MAD"));
 		FlightSearchingSystem fss = new FlightSearchingSystem(route);
 		fss.searchFlights(2, getDepartureDate(-2));
+	}
+
+	@Rule
+    public ExpectedException expectedEx2 = ExpectedException.none();
+
+	@Test
+	public void shouldThrowLastMinuteExceptionWhenPassengersLessThanZero() throws LastMinuteException
+	{
+		expectedEx2.expect(LastMinuteException.class);
+        expectedEx2.expectMessage("The number of passengers has to be above zero");
+
+		Route route = new Route("BCN", "MAD");
+		route.setFlights(loadFlights("BCN", "MAD"));
+		FlightSearchingSystem fss = new FlightSearchingSystem(route);
+		fss.searchFlights(-2, getDepartureDate(1));
 	}
 
 	/**
@@ -135,8 +156,9 @@ public class TicketPriceRoutesTest {
 	 * @param origin
 	 * @param destination
 	 * @return
+	 * @throws LastMinuteException
 	 */
-	public List<Flight> loadFlights(String origin, String destination)
+	public List<Flight> loadFlights(String origin, String destination) throws LastMinuteException
 	{
 		List<Flight> flights = new ArrayList<Flight>();
 

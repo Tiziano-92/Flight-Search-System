@@ -6,10 +6,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import com.lastminute.LastMinuteException;
-import com.lastminute.NotFoundException;
-import com.lastminute.Flight;
-import com.lastminute.Route;
+import com.lastminute.exception.LastMinuteException;
+import com.lastminute.exception.NotFoundException;
+import com.lastminute.model.Flight;
+import com.lastminute.model.Route;
 
 /**
  * The class which handles the flight research information
@@ -37,11 +37,6 @@ public class FlightSearchingSystem {
 	{
 		long daysPriorDeparture = this.getDaysPriorDeparture(departureDate);
 		BigDecimal discountedPrice;
-
-		if(this.route.getDestination().isEmpty() || this.route.getOrigin().isEmpty())
-		{
-			throw new LastMinuteException("A route and a destination must be provided for the research");
-		}
 
 		if(passengerNumber <= 0){
 			throw new LastMinuteException("The number of passengers has to be above zero");

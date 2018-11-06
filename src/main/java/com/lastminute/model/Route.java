@@ -1,7 +1,10 @@
-package com.lastminute;
+package com.lastminute.model;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.lastminute.exception.LastMinuteException;
+import com.lastminute.exception.NotFoundException;
 
 //This information could be handled by using a database, with a DAO pattern.
 //For the purpose of this exercise was not possible to use external java libraries (so mysql connector, for example, could not be used)
@@ -12,7 +15,11 @@ public class Route {
 	private String destination;
 	private List<Flight> flights = new ArrayList<Flight>();
 
-	public Route(String origin, String destination) {
+	public Route(String origin, String destination) throws LastMinuteException {
+		if(origin == "" || destination == "")
+		{
+			throw new LastMinuteException("Origin and destination have to be given!");
+		}
 		this.origin = origin;
 		this.destination = destination;
 	}

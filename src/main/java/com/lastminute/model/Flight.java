@@ -1,6 +1,8 @@
-package com.lastminute;
+package com.lastminute.model;
 
 import java.math.BigDecimal;
+
+import com.lastminute.exception.LastMinuteException;
 
 // This information could be handled by using a database, with a DAO pattern.
 // For the purpose of this exercise was not possible to use external java libraries (so mysql connector, for example, could not be used)
@@ -15,7 +17,15 @@ public class Flight {
 	private String flightCode;
 	private BigDecimal price;
 
-	public Flight(String flightCode, BigDecimal price) {
+	public Flight(String flightCode, BigDecimal price) throws LastMinuteException {
+		if(flightCode == "")
+		{
+			throw new LastMinuteException("Flight code cannot be omitted");
+		}
+		if(price.compareTo(BigDecimal.ZERO) < 0)
+		{
+			throw new LastMinuteException("Price must be greather than zero");
+		}
 		this.flightCode = flightCode;
 		this.price = price;
 	}
