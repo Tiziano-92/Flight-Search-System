@@ -34,15 +34,15 @@ public class FlightTest {
      public ExpectedException expectedEx = ExpectedException.none();
 
      @Test
-     public void shouldThrowLastMinuteExceptionWhenCreatingFlightWitOutFlightCode() throws Exception {
-         expectedEx.expect(LastMinuteException.class);
+     public void shouldThrowIllegalArgumentExceptionWhenCreatingFlightWitOutFlightCode() throws Exception {
+         expectedEx.expect(IllegalArgumentException.class);
          expectedEx.expectMessage("Flight code cannot be omitted");
          Flight flight = new Flight("",new BigDecimal("10.0"));
      }
 
      @Test
-     public void shouldThrowLastMinuteExceptionWhenCreatingFlightWithPriceLessThanZero() throws Exception {
-         expectedEx.expect(LastMinuteException.class);
+     public void shouldThrowIllegalArgumentExceptionWhenCreatingFlightWithPriceLessThanZero() throws Exception {
+         expectedEx.expect(IllegalArgumentException.class);
          expectedEx.expectMessage("Price must be greather than zero");
          Flight flight = new Flight("CIA",new BigDecimal("-4"));
      }

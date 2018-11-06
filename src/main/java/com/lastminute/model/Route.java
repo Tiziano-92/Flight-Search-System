@@ -15,10 +15,10 @@ public class Route {
 	private String destination;
 	private List<Flight> flights = new ArrayList<Flight>();
 
-	public Route(String origin, String destination) throws LastMinuteException {
+	public Route(String origin, String destination) throws IllegalArgumentException {
 		if(origin == "" || destination == "")
 		{
-			throw new LastMinuteException("Origin and destination have to be given!");
+			throw new IllegalArgumentException("Origin and destination have to be given!");
 		}
 		this.origin = origin;
 		this.destination = destination;

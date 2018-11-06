@@ -100,8 +100,8 @@ public class TicketPriceRoutesTest {
 		fss.getFlightResult();
 	}
 
-	@Test(expected = LastMinuteException.class)
-	public void shouldThrowLastMinuteExceptionWhenOriginIsNotDefined() throws LastMinuteException
+	@Test(expected = IllegalArgumentException.class)
+	public void shouldThrowIllegalArgumentExceptionWhenOriginIsNotDefined() throws IllegalArgumentException, LastMinuteException
 	{
 		Route route = new Route("","MAD");
 		route.setFlights(loadFlights("", "MAD"));
@@ -109,8 +109,8 @@ public class TicketPriceRoutesTest {
 		fss.searchFlights(2, getDepartureDate(1));
 	}
 
-	@Test(expected = LastMinuteException.class)
-	public void shouldThrowLastMinuteExceptionWhenDestinationIsNotDefined() throws LastMinuteException
+	@Test(expected = IllegalArgumentException.class)
+	public void shouldThrowIllegalArgumentExceptionWhenDestinationIsNotDefined() throws LastMinuteException, IllegalArgumentException
 	{
 		Route route = new Route("BCN","");
 		route.setFlights(loadFlights("BCN", ""));

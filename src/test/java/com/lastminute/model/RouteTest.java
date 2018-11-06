@@ -33,8 +33,8 @@ public class RouteTest {
      public ExpectedException expectedEx = ExpectedException.none();
 
      @Test
-     public void shouldThrowLastMinuteExceptionWhenCreatingRouteWithNullValues() throws Exception {
-         expectedEx.expect(LastMinuteException.class);
+     public void shouldThrowIllegalArgumentExceptionWhenCreatingRouteWithNullValues() throws Exception {
+         expectedEx.expect(IllegalArgumentException.class);
          expectedEx.expectMessage("Origin and destination have to be given!");
          Route route = new Route("","");
      }
