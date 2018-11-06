@@ -38,6 +38,8 @@ public class TicketPriceRoutesTest {
         expectedResult.put("TK2372", new BigDecimal("157.6"));
         expectedResult.put("TK2659", new BigDecimal("198.4"));
         expectedResult.put("LH5909", new BigDecimal("90.4"));
+
+        assertEquals(fss.getFlightResult(),expectedResult);
 	}
 
 	@Test
