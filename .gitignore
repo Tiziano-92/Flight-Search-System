@@ -9,6 +9,7 @@
 
 # JDT-specific (Eclipse Java Development Tools)     
 .classpath
+/.settings
 
 # Target file
 target/
